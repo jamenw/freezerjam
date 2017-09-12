@@ -1,0 +1,95 @@
+-- CS2550 Fall 2013
+-- Jamen Wood
+-- SQL Assignment #5
+
+--1
+SELECT  i.first_name, i.last_name,i.phone
+FROM student i JOIN zipcode z
+ON (i.zip = z.zip)
+WHERE z.city = 'Newark'
+AND z.state = 'NJ'
+ORDER BY i.last_name, i.first_name;
+
+--2
+SELECT MAX(x.numeric_grade) AS highest_final_grade
+FROM grade x JOIN section z
+ON (x.section_id = z.section_id)
+WHERE z.course_no = 145
+AND x.grade_type_code = 'FI';
+
+--3
+SELECT x.course_no, x.description, x.cost
+FROM course x, section y, instructor z
+WHERE x.course_no = y.course_no
+AND y.instructor_id = z.instructor_id
+AND z.first_name = 'Tom'
+AND z.last_name = 'Wojick'
+ORDER BY x.course_no;
+
+--4
+SELECT z.grade_type_code, x.description, z.number_per_section
+FROM course x, section y, grade_type_weight z
+WHERE x.course_no = y.course_no
+AND y.section_id = z.section_id
+AND x.course_no = 144
+ORDER BY x.description;
+
+--5
+SELECT z.last_name || ' '|| z.first_name AS name
+FROM grade x, enrollment y, student z
+WHERE x.student_id = y.student_id
+AND y.student_id = z.student_id
+GROUP BY z.last_name, z.first_name
+HAVING AVG(x.numeric_grade) >= 93
+ORDER BY z.last_name, z.first_name;
+
+--6
+SELECT x.first_name, x.last_name, x.street_address, y.city, y.state, y.zip
+FROM instructor x, zipcode y, section z
+WHERE x.zip = y.zip
+AND x.instructor_id = z.instructor_id
+GROUP BY x.first_name, x.last_name, x.street_address, y.city, y.state, y.zip
+HAVING COUNT(z.course_no) < 10
+ORDER BY x.last_name, x.first_name;
+
+--7 
+
+SELECT DISTINCT(z.course_no), COUNT(x.student_id) AS enrolled
+FROM enrollment x, section y, course z
+WHERE x.section_id = y.section_id
+AND y.course_no = z.course_no
+AND z.prerequisite IS NULL
+GROUP BY x.student_id, z.course_no
+ORDER BY COUNT(x.student_id) DESC;
+
+--8 
+
+SELECT x.first_name, x.last_name, x.phone
+FROM student x, enrollment y, zipcode z
+WHERE x.student_id = y.student_id
+AND x.zip = z.zip
+AND z.city = 'Flushing'
+AND z.state = 'NY'
+AND TO_TIMESTAMP(y.enroll_date) < TO_TIMESTAMP('02-FEB-2007 10:20.00.000000000 AM')
+GROUP BY x.first_name, x.last_name, x.phone, y.enroll_date
+ORDER BY x.last_name, x.first_name;
+
+--9
+SELECT x.course_no
+FROM section x, grade_type_weight y, grade_type z 
+WHERE x.section_id = y.section_id
+AND y.grade_type_code = z.grade_type_code
+AND z.description = 'Project'
+ORDER BY x.course_no;
+
+--10
+SELECT x.course_no, x.prerequisite, x.description
+FROM course x 
+WHERE x.course_no >=300
+AND x.course_no <=399
+AND x.prerequisite IS NOT NULL
+ORDER BY x.course_no;
+
+
+
+

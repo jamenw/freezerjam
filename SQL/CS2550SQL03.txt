@@ -1,0 +1,75 @@
+-- CS2550 Fall 2013
+-- Jamen Wood
+-- SQL Assignment #3
+
+--1
+SELECT first_name, last_name, phone
+FROM student
+WHERE TO_CHAR(registration_date, 'DD-MON-YYYY') = '23-FEB-2007'
+ORDER BY last_name, first_name;
+
+--2
+SELECT course_no, section_id, start_date_time
+FROM section
+WHERE location = 'L214'
+ORDER BY start_date_time;
+
+--3
+SELECT course_no, section_id, start_date_time, instructor_id, capacity
+FROM section
+WHERE TO_CHAR(start_date_time, 'DD-MON-YYYY') >= TO_DATE('01-APR-2007' , 'DD-MON-YYYY')
+AND TO_CHAR(start_date_time, 'DD-MON-YYYY') <= TO_DATE('30-APR-2007' , 'DD-MON-YYYY') 
+ORDER BY start_date_time, course_no;
+
+--4
+SELECT student_id, section_id, final_grade
+FROM enrollment
+WHERE final_grade IS NOT NULL
+AND (TO_CHAR(enroll_date, 'DD-MON-YYYY') >= TO_DATE('01-JAN-2007' , 'DD-MON-YYYY') 
+AND TO_CHAR(enroll_date, 'DD-MON-YYYY') <= TO_DATE('31-JAN-2007' , 'DD-MON-YYYY'))
+ORDER BY student_id;
+
+--5
+SELECT TO_DATE('07-JAN-2013', 'DD-MON-YYYY')+98 AS semester_end_date
+FROM DUAL;
+
+--6
+SELECT course_no
+FROM section
+WHERE location like 'M%'
+AND (SUBSTR(location, 4) = '1'
+OR SUBSTR(location, 4) = '3'
+OR SUBSTR(location, 4) = '5'
+OR SUBSTR(location, 4) = '7'
+OR SUBSTR(location, 4) = '9')
+ORDER BY course_no;
+
+--7
+SELECT last_name, first_name
+FROM student
+WHERE zip = '11214'
+AND (TO_DATE(registration_date, 'DD-MON-YYYY') > TO_DATE(created_date, 'DD-MON-YYYY')+2)
+ORDER BY last_name, first_name;
+
+--8
+SELECT first_name, last_name, TO_CHAR((MONTHS_BETWEEN(SYSDATE, registration_date)/12), 9999.99) AS years
+FROM student
+WHERE SUBSTR(phone,1,3) = '203'
+ORDER BY 3 DESC; 
+
+
+--9
+SELECT UNIQUE TO_CHAR(start_date_time, 'HH24:MI') AS start_time
+FROM section
+ORDER BY TO_CHAR(start_date_time, 'HH24:MI');
+
+
+--10
+SELECT student_id, section_id
+FROM enrollment
+WHERE TO_CHAR(enroll_date, 'HH24:MI') = '10:20'
+ORDER BY student_id;
+
+
+
+

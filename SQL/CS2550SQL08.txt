@@ -1,0 +1,102 @@
+-- CS2550 Fall 2013
+-- Jamen Wood
+-- SQL Assignment #8
+
+--1
+SELECT z.student_id, z.first_name, z.last_name
+FROM student z, enrollment e 
+WHERE z.student_id = e.student_id 
+GROUP BY z.student_id, z.first_name, z.last_name
+HAVING COUNT(*) =
+(SELECT MAX(COUNT(*))
+FROM student z, enrollment e 
+WHERE z.student_id = e.student_id 
+GROUP BY z.student_id, z.first_name, z.last_name)
+ORDER BY z.last_name;
+
+
+--2 ??
+SELECT first_name, last_name, phone
+FROM instructor
+WHERE zip IN 
+(SELECT zip
+FROM student)
+
+INTERSECT
+
+SELECT first_name, last_name, phone
+FROM instructor
+WHERE instructor_id IN
+      (SELECT instructor_id
+      FROM section 
+      WHERE section_id IN
+            (SELECT section_id
+            FROM enrollment
+            WHERE student_id IN
+                (SELECT student_id
+                FROM enrollment)))     
+                               
+ORDER BY last_name;
+
+
+--3
+SELECT x.first_name, x.last_name, y.city, 'Student' "Role"
+FROM student x, zipcode y
+WHERE x.zip = y.zip
+AND y.zip = '10025'
+UNION
+SELECT x.first_name, x.last_name, y.city, 'Instructor' 
+FROM instructor x, zipcode y
+WHERE x.zip = y.zip
+AND y.zip = '10025'
+ORDER BY "Role", last_name, first_name;
+
+
+--4 ???
+--this calculates location and sections
+SELECT x.location, COUNT(DISTINCT(x.section_id)) AS sections
+      FROM section x, enrollment y
+      WHERE EXISTS
+        (SELECT 'X'
+        FROM section y
+        WHERE x.section_id = y.section_id)
+GROUP BY x.location
+ORDER BY x.location;
+
+
+------------------------------------------------------
+-- this calculates students
+-- can't figure out how to combine all columns together
+SELECT COUNT(y.student_id) AS students
+FROM section x, enrollment y
+WHERE x.section_id = y.section_id
+AND EXISTS
+        (SELECT 'X'
+        FROM section y
+        WHERE x.section_id = y.section_id)
+GROUP BY x.location
+ORDER BY x.location;
+
+
+
+--5
+SELECT grade_type_code, TO_CHAR(numeric_grade,'999,990.99') AS grade
+FROM grade
+WHERE student_id = 127
+AND section_id = 95
+
+UNION ALL
+
+SELECT CONCAT('Average for student ', student_id) AS grade_type_code, TO_CHAR(AVG(numeric_grade),'999,990.99') AS grade
+FROM grade
+WHERE student_id = 127
+AND section_id = 95
+GROUP BY student_id
+ORDER BY grade_type_code DESC, grade DESC;
+
+
+
+
+
+
+

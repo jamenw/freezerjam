@@ -1,0 +1,62 @@
+-- CS2550 Fall 2013
+-- Jamen Wood
+-- SQL Assignment #7
+
+--1 
+SELECT last_name, first_name
+FROM instructor
+WHERE instructor_id NOT IN
+      (SELECT instructor_id
+        FROM section
+        WHERE section_id IN
+            (SELECT section_id
+            FROM grade_type_weight
+            WHERE grade_type_code = 'PJ'))      
+ORDER BY last_name;
+
+
+
+--2  
+SELECT COUNT(DISTINCT(student_id)) AS below_average
+FROM grade
+WHERE section_id = 86
+AND grade_type_code = 'FI'
+AND numeric_grade <
+    (SELECT AVG(numeric_grade)
+    FROM grade);
+
+
+--3
+SELECT z.city, z.state
+FROM student s, enrollment e, zipcode z
+WHERE s.student_id = e.student_id 
+AND s.zip = z.zip
+GROUP BY z.city, z.state
+HAVING COUNT(*) =
+(SELECT MAX(COUNT(*))
+FROM student s, enrollment e, zipcode z
+WHERE s.student_id = e.student_id 
+AND s.zip = z.zip
+GROUP BY z.city, z.state);
+
+
+--4
+SELECT x.student_id, z.first_name, z.last_name, x.numeric_grade
+FROM grade x, enrollment y, student z
+WHERE x.student_id = y.student_id
+AND y.student_id = z.student_id
+AND x.grade_type_code = 'FI'
+AND x.section_id = 81
+AND ROWNUM = 1
+GROUP BY  x.student_id, z.first_name, z.last_name, x.numeric_grade
+ORDER BY x.numeric_grade DESC;
+
+
+--5
+SELECT x.student_id, x.last_name, x.first_name
+FROM student x, enrollment y, section z
+WHERE x.student_id = y.student_id
+AND y.section_id = z.section_id
+GROUP BY x.student_id, x.last_name, x.first_name, z.course_no
+HAVING COUNT(z.course_no) = 2
+ORDER BY x.student_id;
