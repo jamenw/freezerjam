@@ -1,0 +1,146 @@
+-- CS2550 Fall 2013
+-- Jamen Wood
+-- SQL Assignment #10
+
+
+--1
+INSERT INTO instructor
+VALUES
+(815, 'Mr.','Hugo','Reyes','2342 Oceanic Way','07002', 
+NULL, USER, SYSDATE, USER, SYSDATE);
+
+
+--2 
+INSERT INTO section
+VALUES
+(48, 142, 4, TO_DATE('22-SEP-2011 08:15:00','DD-MON-YYYY HH24:MI:SS'),
+'L211', 815, 15, USER, SYSDATE, USER, SYSDATE);
+
+
+--3 
+INSERT INTO enrollment
+SELECT student_id, 48, SYSDATE, NULL, USER,
+SYSDATE, USER, SYSDATE
+FROM student
+WHERE student_id IN (375, 137, 266, 382);
+
+
+--4
+DELETE FROM grade
+WHERE student_id = 147
+AND section_id = 120;
+
+DELETE FROM enrollment
+WHERE student_id = 147
+AND section_id = 120;
+
+
+--5
+DELETE FROM grade
+WHERE student_id = 180
+AND section_id = 119;
+
+DELETE FROM enrollment
+WHERE student_id = 180
+AND section_id = 119;
+
+
+--6
+UPDATE instructor
+SET phone = '4815162342'
+WHERE instructor_id = 815;
+
+
+--7
+UPDATE grade
+SET numeric_grade = 100
+WHERE section_id = 119 
+AND grade_type_code = 'HM'
+AND grade_code_occurrence = 1;
+
+
+--8
+UPDATE grade
+SET numeric_grade = (numeric_grade * 1.1)
+WHERE section_id = 119 
+AND grade_type_code = 'FI'
+AND grade_code_occurrence = 1;
+
+
+
+--9  
+SELECT x.section_id, x.location, COUNT(DISTINCT(z.student_id)) AS enrolled
+FROM section x, enrollment y, student z
+WHERE x.section_id = y.section_id (+)
+AND y.student_id = z.student_id 
+AND x.course_no = 142
+GROUP BY x.section_id, x.location
+ORDER BY x.section_id;
+
+--10
+SELECT x.first_name, x.last_name, x.phone
+FROM instructor x, section y, course z
+WHERE x.instructor_id = y.instructor_id
+AND y.course_no = z.course_no
+AND z.description = 'Project Management'
+ORDER BY x.last_name;
+
+
+--11
+SELECT x.student_id, x.first_name, x.last_name, TRUNC(AVG(z.numeric_grade),2) AS average
+FROM student x, enrollment y, grade z
+WHERE x.student_id = y.student_id
+AND y.student_id = z.student_id
+AND z.section_id = 119
+GROUP BY x.student_id, x.first_name, x.last_name
+ORDER BY x.student_id;
+
+
+
+--12 
+SELECT COUNT(DISTINCT(instructor_id)) AS numberofinstructors
+FROM section x, enrollment y
+WHERE x.section_id = y.section_id
+AND x.location = 'L211'
+GROUP BY instructor_id
+HAVING COUNT(y.student_id) > 3;
+
+
+
+--13 
+SELECT x.salutation || ' ' || x.first_name || ' ' || x.last_name AS instructor, x.phone
+FROM instructor x, section y
+WHERE x.instructor_id = y.instructor_id
+AND course_no = 142
+GROUP BY x.salutation, x.first_name, x.last_name, x.phone
+HAVING 1 = (SELECT COUNT(DISTINCT(y.course_no))
+            FROM instructor x, section y, course z
+            WHERE x.instructor_id = y.instructor_id
+            AND y.course_no = 142);
+
+
+
+--14
+SELECT x.first_name, x.last_name, y.section_id, z.course_no
+FROM student x, enrollment y, section z, grade zz
+WHERE x.student_id = y.student_id 
+AND y.section_id = z.section_id 
+AND y.section_id = zz.section_id (+)
+AND zz.numeric_grade IS NULL
+ORDER BY x.first_name, x.last_name;
+
+
+
+--15 
+SELECT UNIQUE TO_CHAR(start_date_time, 'HH:MM AM') AS starttime, 
+COUNT(UNIQUE(course_no)) AS number_of_courses
+FROM section
+GROUP BY TO_CHAR(start_date_time, 'HH:MM AM')
+ORDER BY TO_CHAR(start_date_time, 'HH:MM AM');
+
+
+
+
+
+
+
