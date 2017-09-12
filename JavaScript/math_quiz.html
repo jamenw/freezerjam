@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="code.css"/>
+		<title>Math Quiz</title>
+		
+	
+	</head>
+	
+	<body>
+	
+	<p><u><b>Math Quiz</u></b></p>
+	<b><b>
+	<p>Ready to start?</p>
+
+	<button onclick="myFunction()">Yes I'm Ready!</button>
+		
+
+<script>
+
+function myFunction() {
+
+
+function randomNumber (low, high) {
+
+return Math.floor(Math.random() * (high - low + 1) + low);
+}
+
+document.write("<p><b>Ok here we go!!!</b></p>");
+
+document.write("<p><b>How many problems? </b></p>");
+var count = prompt("How many problems?");
+document.write("<p><b>" + count + "</b></p>");
+
+var i;
+var answer;
+var input1;
+var n1;
+var n2;
+var right = 0;
+
+for(i=1; i <= count; i++) {
+
+n1 = randomNumber(1,12);
+n2 = randomNumber(1,12);
+answer = n1 * n2;
+
+document.write("<p><b>question #" + i + " <br>     " + n1 + " X " + n2 +"</b></p>");
+input1 = prompt("question #" + i + "  " + n1 + " X " + n2 );
+document.write("<p><b>" + input1 + "</b></p>");
+
+    if (input1 == answer) 
+    {
+	document.write('<p><font size="3" color="green"><b>Way to go!      ' + answer + ' is correct! </b></font></p>');
+    	alert("Way to go!   " + answer + " is correct! ");
+	right++;
+
+    } else
+        {
+
+	document.write('<p><font size="3" color="red"><i><b>Too bad!    The answer was ' + answer + '</b></i></font></p>');
+	alert("Too bad!  The answer was " + answer);
+       
+        }
+
+}
+
+document.write("<p><b>You got " + right + " out of " + count + " right</b>");
+var perc = Math.round((right/count) * 100)
+document.write("<p><b>That's " + perc + "%</b></p>");
+
+}
+
+
+</script>
+	
+	
+	
+</body>
+</html>

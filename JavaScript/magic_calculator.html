@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="code.css"/>
+		<title>Magic Calculator</title>
+		
+	</head>
+	
+	<body>
+	
+	<p><b><u>Magic Calculator</u></b></p>
+	<b><b>
+
+	<p>Convert Hourly Rate to Annual Pay</p>
+
+
+<p>Hourly Rate:</p></p><input type="text" id="myText1" value="">
+
+
+<p id="demo"></p>
+
+<button onclick="myFunction1()">Calculate</button>
+
+
+<b><b>
+
+<p>Convert Annual Pay to Hourly Rate</p>
+
+
+<p>Annual Pay:</p></p><input type="text" id="myText2" value="">
+
+
+<p id="demo"></p>
+
+<button onclick="myFunction2()">Calculate</button>
+
+
+
+<script>
+function myFunction1()
+{
+var x = document.getElementById("myText1").value;
+var y = Math.round((x * 40 * 52) * 100) / 100;
+var m = Math.round((y / 12) * 100) / 100;
+
+document.write("<h3>Hourly Rate of $" + x + " equals: </h3>");
+document.write("<h3>Monthly Pay: $" + m + "</h3>");
+document.write("<h3>Annual Pay: $" + y + "</h3>");
+
+}
+
+
+function myFunction2()
+{
+var x = document.getElementById("myText2").value;
+var h = Math.round((x / 52 / 40 ) * 100) / 100;
+var m = Math.round((x / 12) * 100) / 100;
+
+document.write("<h3>Annual Pay of $" + x + " equals: </h3>");
+document.write("<h3>Monthly Pay: $" + m + "</h3>");
+document.write("<h3>Hourly Rate: $" + h + "</h3>");
+
+}
+
+
+</script>
+
+
+</body>
+</html>
