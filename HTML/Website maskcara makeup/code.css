@@ -1,0 +1,157 @@
+body {
+	
+
+	
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	
+	
+}
+
+
+a {
+	font-family:"impact";
+	color:white;
+	font-size: 30px;
+	
+	letter-spacing: .1em;
+				
+	position:relative;
+	
+	left:50px;
+	top:30px;
+
+}
+
+
+a:link    {	color:white;
+		text-decoration:none;
+}
+
+a:visited {	color:white;
+		text-decoration:none;
+
+}
+
+
+a:hover   {color:brown;}
+
+#cf {
+  position:fixed;
+  margin:0 auto;
+}
+
+#cf img {
+  position:fixed;
+  left:0px;
+  top:0px;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+
+#cf img.rock1{
+-webkit-animation-name: cf4FadeInOut;
+-webkit-animation-timing-function: ease-in-out;
+-webkit-animation-iteration-count: infinite;
+-webkit-animation-duration: 20s;
+-webkit-animation-direction: alternate;
+}
+
+#cf img.rock2{
+-webkit-animation-name: cf4FadeInOut;
+-webkit-animation-timing-function: ease-in-out;
+-webkit-animation-iteration-count: infinite;
+-webkit-animation-duration: 20s;
+-webkit-animation-direction: alternate;
+}
+
+#cf img.rock3{
+-webkit-animation-name: cf4FadeInOut;
+-webkit-animation-timing-function: ease-in-out;
+-webkit-animation-iteration-count: infinite;
+-webkit-animation-duration: 20s;
+-webkit-animation-direction: alternate;
+}
+
+#cf img.rock4{
+-webkit-animation-name: cf4FadeInOut;
+-webkit-animation-timing-function: ease-in-out;
+-webkit-animation-iteration-count: infinite;
+-webkit-animation-duration: 20s;
+-webkit-animation-direction: alternate;
+}
+
+
+
+@-webkit-keyframes cf4FadeInOut {
+  0% {
+    opacity:1;
+  }
+  25% {
+    opacity:0;
+  }
+  50% {
+    opacity:0;
+  }
+  75% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+
+#cf img.rock1 {
+  -webkit-animation-delay: 15s;
+}
+#cf img.rock2 {
+  -webkit-animation-delay: 10s;
+}
+#cf img.rock3 {
+  -webkit-animation-delay: 5s;
+}
+#cf img.rock4 {
+  -webkit-animation-delay: 0;
+}
+
+.shadow { 
+    
+/* Chrome, Safari, Opera */
+-webkit-animation-name:shade;
+-webkit-animation-duration:5s;
+-webkit-animation-timing-function:linear;
+-webkit-animation-delay:2s;
+-webkit-animation-iteration-count:infinite;
+-webkit-animation-direction:alternate;
+-webkit-animation-play-state:running;
+
+
+/* Standard syntax */
+animation-name:shade;
+animation-duration:5s;
+animation-timing-function:linear;
+animation-delay:2s;
+animation-iteration-count:infinite;
+animation-direction:alternate;
+animation-play-state:running;
+}
+
+/* Chrome, Safari, Opera */	
+@-webkit-keyframes shade
+{
+from {left:50px; top:50px;text-shadow: 0em 0em 0em black;opacity:1;}
+to {left:50px; top:0px; text-shadow: 1em 1em 1em black; opacity:1;}
+
+
+/* Standard syntax */
+@keyframes shade
+{
+
+from {left:50px; top:50px;text-shadow: 0em 0em 0em black;opacity:1;}
+to {left:50px; top:0px; text-shadow: 1em 1em 1em black; opacity:1;l}
+
+}
+
