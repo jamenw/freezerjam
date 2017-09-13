@@ -1,0 +1,9 @@
+import urllib.request
+
+
+def lambda_handler(event,context):
+    byu_repo_meta = urllib.request.urlopen("https://raw.githubusercontent.com/byu-oit/repo-meta/bbec31a6afa2c2407e96c1ebce85051e99cfee5f/.repo-meta.yml")
+    contents_file = byu_repo_meta.read()
+    print (contents_file)
+    return None
+
